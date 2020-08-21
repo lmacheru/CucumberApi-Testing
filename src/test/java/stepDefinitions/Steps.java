@@ -52,14 +52,15 @@ public class Steps {
     @Then("Check if Bulldog is there")
     public void bulldogCheck() {
 
+        ResponseBody body = response.getBody();
+
         Assert.assertEquals(200, response.getStatusCode());
         // First get the JsonPath object instance from the Response interface
         JsonPath jsonPathEvaluator = response.jsonPath();
-        String Bulldog = jsonPathEvaluator.get("message.bulldog").toString();
+        String Bulldog = jsonPathEvaluator.get("message").toString();
 
-
-        System.out.println("Bulldog was found:: " + Bulldog);
-
+        Assert.assertTrue(Bulldog.contains("bulldog"));
+        System.out.println("Bulldog was found on the response:: " + Bulldog);
     }
 
     @Then("Retrieve all sub-breeds")
@@ -92,13 +93,10 @@ public class Steps {
         JsonPath jsonPathEvaluator = response.jsonPath();
         JsonArray jsonArray = new JsonArray();
 
-
         for (int i = 0; i < jsonArray.size(); i++) {
             JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
             System.out.println(jsonObject.get("id").getAsString());
-
         }
-
     }
 
     @When("I add a new pet")
