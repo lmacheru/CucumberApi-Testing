@@ -34,39 +34,43 @@ public class Steps {
         response = request.get();
 
         jsonString = response.asString();
-
         Assert.assertEquals(200, response.getStatusCode());
     }
 
     @When("Get list of Random Breed")
     public void getAllList() {
         RestAssured.baseURI = BASE_URL + "/list/all";
-
         RequestSpecification request = RestAssured.given();
         response = request.get();
 
         jsonString = response.asString();
         Assert.assertEquals(200, response.getStatusCode());
         System.out.println("List All Random Breed Response Body is: " + response.asString());
+
     }
 
     @Then("Check if Bulldog is there")
     public void bulldogCheck() {
+
         Assert.assertEquals(200, response.getStatusCode());
+        // First get the JsonPath object instance from the Response interface
+        JsonPath jsonPathEvaluator = response.jsonPath();
+        String Bulldog = jsonPathEvaluator.get("message.bulldog").toString();
+
+
+        System.out.println("Bulldog was found:: " + Bulldog);
+
     }
 
-    @When("Retrieve all sub-breeds")
+    @Then("Retrieve all sub-breeds")
     public void SubBreeds() {
-        RestAssured.baseURI = BASE_URL + "/bulldog/list";
+        RestAssured.baseURI = "https://dog.ceo/api/breed/bulldog/list";
         RequestSpecification request = RestAssured.given();
 
         response = request.get();
         jsonString = response.asString();
-
         System.out.println("Retrieve all sub-breeds Response Body is: " + response.asString());
-
     }
-
 
     @Given("Retrieve all available pets")
     public void AvailableStatus() {
@@ -77,7 +81,6 @@ public class Steps {
         jsonString = response.asString();
         Assert.assertEquals(200, response.getStatusCode());
     }
-
 
     //Pets -------------------https://petstore.swagger.io----------------------------------------------
     @Then("Confirm Doggie and Category 12 is in the response")
@@ -96,12 +99,6 @@ public class Steps {
 
         }
 
-        /*List<String> allBooks = jsonPathEvaluator.getList("..id");
-
-        // Iterate over the list and print individual book item
-        for (String book : allBooks) {
-            System.out.println("Book: " + book);
-        }*/
     }
 
     @When("I add a new pet")
