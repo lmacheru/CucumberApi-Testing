@@ -20,7 +20,7 @@ formatter.result({
   "status": "passed"
 });
 formatter.step({
-  "name": "Get all list",
+  "name": "Get list of Random Breed",
   "keyword": "When "
 });
 formatter.match({
@@ -65,11 +65,11 @@ formatter.result({
   "status": "passed"
 });
 formatter.step({
-  "name": "Confirm name and Category 12 is in the response",
+  "name": "Confirm Doggie and Category 12 is in the response",
   "keyword": "Then "
 });
 formatter.match({
-  "location": "stepDefinitions.Steps.Confirming()"
+  "location": "stepDefinitions.Steps.ConfirmDoggie()"
 });
 formatter.result({
   "status": "passed"

@@ -17,9 +17,7 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
 public class Steps {
-    private static final String USER_ID = "9b5f49ab-eea9-45f4-9d66-bcf56a531b85";
-    private static final String USERNAME = "TOOLSQA-Test";
-    private static final String PASSWORD = "Test@@123";
+
     private static final String BASE_URL = "https://dog.ceo/api/breeds";
     private static final String PetBASE_URL = "https://petstore.swagger.io/v2/pet";
     public String CreadtedId = "";
@@ -27,9 +25,8 @@ public class Steps {
     private static String token;
     private static Response response;
     private static String jsonString;
-    private static String bookId;
 
-
+    //Dogs ----------------https://dog.ceo/dog-api/------------------------------------------------
     @Given("A Random Breed")
     public void RandomBreedCheck() {
         RestAssured.baseURI = BASE_URL + "/image/random";
@@ -40,9 +37,10 @@ public class Steps {
         Assert.assertEquals(200, response.getStatusCode());
     }
 
-    @When("Get all list")
+    @When("Get list of Random Breed")
     public void getAllList() {
         RestAssured.baseURI = BASE_URL + "/list/all";
+        System.out.println("Random Breed Response Body is: " + response.asString());
     }
 
     @Then("Check if Bulldog is there")
@@ -54,6 +52,9 @@ public class Steps {
     public void SubBreeds() {
         RestAssured.baseURI = BASE_URL + "/bulldog/list";
         Assert.assertEquals(200, response.getStatusCode());
+
+        System.out.println("Retrieve all sub-breeds Response Body is: " + response.asString());
+
     }
 
 
@@ -67,8 +68,10 @@ public class Steps {
         Assert.assertEquals(200, response.getStatusCode());
     }
 
-    @Then("Confirm name and Category 12 is in the response")
-    public void Confirming() {
+
+    //Pets -------------------https://petstore.swagger.io----------------------------------------------
+    @Then("Confirm Doggie and Category 12 is in the response")
+    public void ConfirmDoggie() {
 
         ResponseBody body = response.getBody();
 
@@ -79,8 +82,6 @@ public class Steps {
 
         for (int i = 0; i < jsonArray.size(); i++) {
             JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
-
-
             System.out.println(jsonObject.get("id").getAsString());
 
         }
