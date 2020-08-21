@@ -73,31 +73,26 @@ public class Steps {
         System.out.println("Retrieve all sub-breeds Response Body is: " + response.asString());
     }
 
-    @Given("Retrieve all available pets")
-    public void AvailableStatus() {
-        RestAssured.baseURI = PetBASE_URL + "/findByStatus?status=available";
-        RequestSpecification request = RestAssured.given();
-        response = request.get();
-
-        jsonString = response.asString();
-        Assert.assertEquals(200, response.getStatusCode());
-    }
-
     //Pets -------------------https://petstore.swagger.io----------------------------------------------
-    @Then("Confirm Doggie and Category 12 is in the response")
-    public void ConfirmDoggie() {
+    @Given("all available pets Confirm Doggie with Category 12 is in the response")
+    public void AvailableStatus() {
+        RestAssured.baseURI = "https://petstore.swagger.io/v2/pet/findByStatus?status=available";
+        RequestSpecification httpRequest = RestAssured.given();
+        Response response = httpRequest.get("https://petstore.swagger.io/v2/pet/findByStatus?status=available");
 
+        // Retrieve the body of the Response
         ResponseBody body = response.getBody();
 
-        // First get the JsonPath object instance from the Response interface
-        JsonPath jsonPathEvaluator = response.jsonPath();
-        JsonArray jsonArray = new JsonArray();
+        // To check for sub string presence get the Response body as a String.
+        // Do a String.contains
+        String bodyAsString = body.asString();
+        System.out.println(" pets response:: " + bodyAsString);
 
-        for (int i = 0; i < jsonArray.size(); i++) {
-            JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
-            System.out.println(jsonObject.get("id").getAsString());
-        }
+        Assert.assertEquals("Response body contains " /*Expected value*/, bodyAsString.contains("doggie") /*Actual Value*/, true);
+        Assert.assertEquals("Response body contains " /*Expected value*/, bodyAsString.contains("300") /*Actual Value*/, true);
+
     }
+
 
     @When("I add a new pet")
     public void addPetInList() {

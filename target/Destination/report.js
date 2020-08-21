@@ -1,4 +1,4 @@
-$(document).ready(function() {var formatter = new CucumberHTML.DOMFormatter($('.cucumber-report'));formatter.uri("file:src/test/java/functional/End2End_Test.feature");
+$(document).ready(function() {var formatter = new CucumberHTML.DOMFormatter($('.cucumber-report'));formatter.uri("file:src/test/java/functional/Api_Test.feature");
 formatter.feature({
   "name": "end to end tests for Dogs api",
   "description": "",
@@ -55,21 +55,11 @@ formatter.scenario({
   "keyword": "Scenario"
 });
 formatter.step({
-  "name": "Retrieve all available pets",
+  "name": "all available pets Confirm Doggie with Category 12 is in the response",
   "keyword": "Given "
 });
 formatter.match({
   "location": "stepDefinitions.Steps.AvailableStatus()"
-});
-formatter.result({
-  "status": "passed"
-});
-formatter.step({
-  "name": "Confirm Doggie and Category 12 is in the response",
-  "keyword": "Then "
-});
-formatter.match({
-  "location": "stepDefinitions.Steps.ConfirmDoggie()"
 });
 formatter.result({
   "status": "passed"
