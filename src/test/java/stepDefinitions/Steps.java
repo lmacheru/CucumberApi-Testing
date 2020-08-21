@@ -34,13 +34,20 @@ public class Steps {
         response = request.get();
 
         jsonString = response.asString();
+
         Assert.assertEquals(200, response.getStatusCode());
     }
 
     @When("Get list of Random Breed")
     public void getAllList() {
         RestAssured.baseURI = BASE_URL + "/list/all";
-        System.out.println("Random Breed Response Body is: " + response.asString());
+
+        RequestSpecification request = RestAssured.given();
+        response = request.get();
+
+        jsonString = response.asString();
+        Assert.assertEquals(200, response.getStatusCode());
+        System.out.println("List All Random Breed Response Body is: " + response.asString());
     }
 
     @Then("Check if Bulldog is there")
@@ -51,7 +58,10 @@ public class Steps {
     @When("Retrieve all sub-breeds")
     public void SubBreeds() {
         RestAssured.baseURI = BASE_URL + "/bulldog/list";
-        Assert.assertEquals(200, response.getStatusCode());
+        RequestSpecification request = RestAssured.given();
+
+        response = request.get();
+        jsonString = response.asString();
 
         System.out.println("Retrieve all sub-breeds Response Body is: " + response.asString());
 
